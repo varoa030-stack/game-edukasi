@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Trophy, Medal, Award, Crown } from "lucide-react";
-
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 interface LeaderboardEntry {
   name: string;
   kelas: string;
@@ -12,9 +13,22 @@ export function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("leaderboard") || "[]");
+  const loadLeaderboard = async () => {
+    const snapshot = await getDocs(
+      collection(db, "leaderboard")
+    );
+
+    const data = snapshot.docs.map((doc) => ({
+      ...doc.data(),
+    })) as LeaderboardEntry[];
+
+    data.sort((a, b) => b.score - a.score);
+
     setLeaderboard(data);
-  }, []);
+  };
+
+  loadLeaderboard();
+}, []);
 
   const getRankIcon = (index: number) => {
     switch (index) {

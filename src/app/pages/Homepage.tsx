@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { BookOpen, Trophy } from "lucide-react";
+import { BookOpen, Trophy, Shield } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
@@ -39,6 +39,15 @@ export function Homepage() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="flex justify-end mb-4">
+  <Button
+    onClick={() => navigate("/admin/login")}
+    className="bg-purple-500 hover:bg-purple-600 text-white rounded-xl"
+  >
+    <Shield className="w-4 h-4 mr-2" />
+    Admin
+  </Button>
+</div>
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
         {/* Left Content */}

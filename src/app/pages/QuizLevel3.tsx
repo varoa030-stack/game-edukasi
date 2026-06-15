@@ -4,7 +4,8 @@ import { Trophy, ChevronRight } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Progress } from "../components/ui/progress";
 import { level3Questions } from "../data/quizQuestions";
-
+import { db } from "../../firebase";
+import { collection, addDoc } from "firebase/firestore";
 export function QuizLevel3() {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -13,9 +14,27 @@ export function QuizLevel3() {
   const [showResult, setShowResult] = useState(false);
   const [answers, setAnswers] = useState<boolean[]>([]);
 
-  const question = level3Questions[currentQuestion];
-  const progress = ((currentQuestion + 1) / level3Questions.length) * 100;
+  const soalAdmin = JSON.parse(
+  localStorage.getItem("soal") || "[]"
+);
 
+const allQuestions = [
+  ...level3Questions,
+  ...soalAdmin.map((item: any) => ({
+    question: item.pertanyaan,
+    options: item.pilihan,
+    correctAnswer: item.jawaban,
+  })),
+];
+const question = allQuestions[currentQuestion] ?? {
+  question: "",
+  options: [],
+  correctAnswer: "",
+};
+
+
+const progress =
+  ((currentQuestion + 1) / allQuestions.length) * 100;
   const handleAnswerSelect = (answer: string) => {
     if (selectedAnswer) return;
 
@@ -29,7 +48,7 @@ export function QuizLevel3() {
     }
 
     setTimeout(() => {
-      if (currentQuestion < level3Questions.length - 1) {
+      if (currentQuestion < allQuestions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(null);
       } else {
@@ -38,7 +57,7 @@ export function QuizLevel3() {
     }, 1000);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     // Calculate total score from all levels
     const existingScores = JSON.parse(localStorage.getItem("quizScores") || "{}");
     const totalScore = (existingScores.level1 || 0) + score;
@@ -63,9 +82,16 @@ export function QuizLevel3() {
 
     // Sort by score descending
     leaderboard.sort((a: any, b: any) => b.score - a.score);
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
 
-    navigate("/hasil");
+await addDoc(collection(db, "leaderboard"), {
+  name: user.name || "Anonim",
+  kelas: user.kelas || "-",
+  score: totalScore,
+  date: new Date().toISOString(),
+});
+
+navigate("/hasil");
   };
 
   const handleRetry = () => {
@@ -147,7 +173,7 @@ export function QuizLevel3() {
           <span className="font-semibold">Level 3 - Kuis Pemahaman</span>
         </div>
         <p className="text-gray-600">
-          Soal {currentQuestion + 1} dari {level3Questions.length}
+          Soal {currentQuestion + 1} dari {allQuestions.length}
         </p>
       </div>
 
@@ -162,7 +188,7 @@ export function QuizLevel3() {
         </h2>
 
         <div className="space-y-4">
-          {question.options.map((option, index) => {
+          {question.options.map((option: string, index: number) => {
             const isSelected = selectedAnswer === option;
             const isCorrect = option === question.correctAnswer;
             const showCorrect = selectedAnswer && isCorrect;

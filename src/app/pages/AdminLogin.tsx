@@ -16,7 +16,7 @@ export function AdminLogin() {
     setError("");
 
     // Simple authentication (in real app, this should be server-side)
-    if (username === "admin" && password === "admin123") {
+    if (username === "adminsd" && password === "admin123") {
       localStorage.setItem("adminAuth", "true");
       navigate("/admin/dashboard");
     } else {

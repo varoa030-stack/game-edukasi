@@ -10,6 +10,10 @@ export function Materi() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentPart = bodyParts[currentIndex];
 
+
+const materiAdmin = JSON.parse(
+  localStorage.getItem("materi") || "[]"
+);
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
@@ -90,7 +94,28 @@ export function Materi() {
           </div>
         </div>
       </div>
+{materiAdmin.length > 0 && (
+  <div className="mb-10">
+    <h2 className="text-3xl font-bold mb-6">
+      Materi Tambahan dari Guru
+    </h2>
 
+    {materiAdmin.map((item: any) => (
+      <div
+        key={item.id}
+        className="bg-white rounded-2xl shadow-lg p-6 mb-4 border"
+      >
+        <h3 className="text-xl font-bold mb-2">
+          {item.judul}
+        </h3>
+
+        <p>
+          {item.isi}
+        </p>
+      </div>
+    ))}
+  </div>
+)}
       {/* Navigation */}
       <div className="flex items-center justify-between mb-8">
         <Button
@@ -128,7 +153,9 @@ export function Materi() {
       </div>
 
       {/* CTA to Quiz */}
-      {currentIndex === bodyParts.length - 1 && (
+      const materiAdmin = JSON.parse(
+  localStorage.getItem("materi") || "[]"
+);{currentIndex === bodyParts.length - 1 && (
         <div className="bg-gradient-to-r from-orange-100 to-pink-100 p-8 rounded-3xl border-2 border-orange-200 text-center shadow-lg">
           <h3 className="text-2xl font-bold text-gray-800 mb-3">
             🎉 Selamat! Kamu sudah belajar semua materi!

@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { LogOut, Users, TrendingUp, Award, BarChart3, ArrowLeft } from "lucide-react";
+import {
+  LogOut,
+  Users,
+  TrendingUp,
+  Award,
+  BarChart3,
+  ArrowLeft,
+  BookOpen,
+  FileQuestion
+} from "lucide-react";
 import { Button } from "../components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
@@ -118,7 +127,35 @@ export function AdminDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Stats Cards */}
+       <div className="grid md:grid-cols-2 gap-6 mb-8">
+
+  <div
+    onClick={() => navigate("/admin/materi")}
+    className="cursor-pointer bg-gradient-to-r from-blue-400 to-blue-600 text-white p-8 rounded-3xl shadow-xl hover:scale-105 transition-all"
+  >
+    <BookOpen className="w-10 h-10 mb-3" />
+    <h2 className="text-2xl font-bold">
+      Kelola Materi
+    </h2>
+    <p>
+      Tambah, edit, dan hapus materi pembelajaran
+    </p>
+  </div>
+
+  <div
+    onClick={() => navigate("/admin/soal")}
+    className="cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500 text-white p-8 rounded-3xl shadow-xl hover:scale-105 transition-all"
+  >
+    <FileQuestion className="w-10 h-10 mb-3" />
+    <h2 className="text-2xl font-bold">
+      Kelola Soal
+    </h2>
+    <p>
+      Tambah dan edit soal kuis pilihan ganda
+    </p>
+  </div>
+
+</div> {/* Stats Cards */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-3xl shadow-xl p-6 border-2 border-blue-100">
             <div className="bg-blue-100 w-12 h-12 rounded-2xl flex items-center justify-center mb-3">
