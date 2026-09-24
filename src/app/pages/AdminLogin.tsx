@@ -43,22 +43,34 @@ export function AdminLogin() {
             <div className="bg-gradient-to-br from-blue-400 to-purple-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Lock className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Login Admin</h1>
-            <p className="text-gray-600">Masuk untuk mengakses dashboard admin</p>
+
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              Login Admin
+            </h1>
+
+            <p className="text-gray-600">
+              Masuk untuk mengakses dashboard admin
+            </p>
           </div>
 
           {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-6">
             {error && (
               <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-4">
-                <p className="text-red-700 text-sm font-medium">{error}</p>
+                <p className="text-red-700 text-sm font-medium">
+                  {error}
+                </p>
               </div>
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="username" className="text-gray-700">Username</Label>
+              <Label htmlFor="username" className="text-gray-700">
+                Username
+              </Label>
+
               <div className="relative">
                 <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+
                 <Input
                   id="username"
                   type="text"
@@ -72,9 +84,13 @@ export function AdminLogin() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-700">Password</Label>
+              <Label htmlFor="password" className="text-gray-700">
+                Password
+              </Label>
+
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+
                 <Input
                   id="password"
                   type="password"
@@ -94,15 +110,9 @@ export function AdminLogin() {
               Masuk
             </Button>
           </form>
-
-          {/* Demo Credentials */}
-          <div className="mt-6 bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-2xl border-2 border-orange-200">
-            <p className="text-sm text-orange-700 font-medium mb-2">Demo Credentials:</p>
-            <p className="text-xs text-orange-600">Username: <code className="bg-white px-2 py-1 rounded">admin</code></p>
-            <p className="text-xs text-orange-600">Password: <code className="bg-white px-2 py-1 rounded">admin123</code></p>
-          </div>
         </div>
       </div>
     </div>
   );
 }
+
